@@ -1,0 +1,153 @@
+.thehub-container {
+  background-image: url('https://cdn.shopify.com/s/files/1/0672/2597/7069/files/FONDO-PUNTOS_2.png?v=1753373538');
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  min-height: 100vh;
+  color: white;
+  font-family: 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.thehub-question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.thehub-question h2
+ {
+    font-size: 43px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.thehub-question h2 strong {
+  color: #C1FF02;
+}
+
+.thehub-sport-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 150px);
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.thehub-sport-btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.thehub-sport-btn:hover,
+.thehub-sport-btn.selected {
+  background-color: #C1FF02;
+  color: #000;
+}
+.thehub-select-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.thehub-next-btn {
+  background: none;
+  border: none;
+  color: #C1FF02;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 2px solid #C1FF02;
+  padding: 10px;
+  transition: opacity 0.2s;
+}
+
+.thehub-next-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.thehub-question {
+  margin-bottom: 20px;
+}
+.thehub-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.thehub-back {
+  background: transparent;
+  border: none;
+  color: #888;
+  margin-right: 12px;
+  cursor: pointer;
+}
+.thehub-select,
+.thehub-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+.thehub-recommendation {
+    background: transparent;
+    border-left: 4px solid rgba(227, 227, 227, 1);
+    padding: 10px 15px;
+    margin: 12px 0;
+    border-radius: 4px;
+}
+.thehub-time-slider {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.thehub-time-display {
+    font-size: 42px;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.thehub-slider {
+    width: 100%;
+    max-width: 90%;
+    height: 5px;
+    accent-color: #c1ff02;
+    border-radius: 4px;
+    background: #dce3ea;
+}
+
+.thehub-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #5c6ac4;
+  cursor: pointer;
+  margin-top: -4px;
+}
+
+.thehub-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #5c6ac4;
+  cursor: pointer;
+}

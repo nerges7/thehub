@@ -1,0 +1,47 @@
+/* editor.css */
+
+.rich-editor-container {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.5rem;
+  background: #fff;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.tool-btn:hover {
+  background: #f0f0f0;
+}
+
+.tool-btn.active {
+  background: #e0e0e0;
+  font-weight: bold;
+}
+
+.editor-content {
+  min-height: 120px;
+  outline: none;
+  padding: 4px;
+}
+.ProseMirror-focused {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
