@@ -8,7 +8,7 @@ import { getQuestions } from '../questions/utils';
 import { Category, Question, Rule } from '@/types';
 import RuleForm from './RuleForm';
 import { Modal } from '@shopify/polaris';
-
+import { stripHtml } from '@/utils/stripHtml';
 export default function RulesPage() {
   const [rules, setRules] = useState<Rule[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -68,7 +68,7 @@ export default function RulesPage() {
                 </Text>
 
                <Text variant="bodySm" tone="subdued" as="p">
-  Unidad base: {getBaseQuestionInfo(rule.baseQuestionKey)} × {rule.baseMultiplier}
+  Unidad base: {stripHtml(getBaseQuestionInfo(rule.baseQuestionKey))} × {rule.baseMultiplier}
 </Text>
 
 
@@ -82,7 +82,7 @@ export default function RulesPage() {
                       {rule.modifiers.map((mod, i) => (
                         <span key={i}>
                           {' '}
-                          {getQuestionText(mod.key)} = {mod.value} × {mod.multiplier}
+                          {stripHtml(getQuestionText(mod.key))} = {mod.value} × {mod.multiplier}
                           {i < rule.modifiers.length - 1 ? ` ${rule.logic} ` : ''}
                         </span>
                       ))}

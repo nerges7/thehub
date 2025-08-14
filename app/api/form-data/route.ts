@@ -1,10 +1,10 @@
 import { db } from '@/lib/firebase';
-import { getDocs, collection, query, orderBy } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
+import { Sport, Question } from '@/types';
 
-// 🔁 CORS Headers
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*', // O restringe a tu dominio específico
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
@@ -18,22 +18,40 @@ export async function OPTIONS() {
 
 export async function GET() {
   try {
-    const sportsSnap = await getDocs(collection(db, 'sports'));
-    const questionsSnap = await getDocs(
-      query(collection(db, 'questions'), orderBy('order'))
-    );
+    const [sportsSnap, questionsSnap] = await Promise.all([
+      getDocs(collection(db, 'sports')),
+      getDocs(collection(db, 'questions')),
+    ]);
 
-    const sportsRaw = sportsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Solución óptima con type assertion
+    const sports = sportsSnap.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    } as Sport));
 
     const questions = questionsSnap.docs.map(doc => {
-      const data = doc.data() as { sportId: string; [key: string]: any };
-      return { id: doc.id, ...data };
+      const data = doc.data();
+      return {
+        id: doc.id,
+        sports: data.sports || (data.sportId ? [{ sportId: data.sportId, order: data.order || 0 }] : []),
+        text: data.text,
+        key: data.key,
+        type: data.type,
+        options: data.options,
+        unit: data.unit,
+        timeComponents: data.timeComponents || [],
+        forAllSports: data.forAllSports || false
+      } as Question;
     });
 
-    const sportIdsWithQuestions = [...new Set(questions.map(q => q.sportId))];
-    const sports = sportsRaw.filter(sport => sportIdsWithQuestions.includes(sport.id));
+    const sportsWithQuestions = sports.filter(sport => 
+      questions.some(q => q.forAllSports || q.sports?.some(s => s.sportId === sport.id))
+    );
 
-    return new NextResponse(JSON.stringify({ sports, questions }), {
+    return new NextResponse(JSON.stringify({ 
+      sports: sportsWithQuestions, 
+      questions 
+    }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',

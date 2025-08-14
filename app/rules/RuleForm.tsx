@@ -7,6 +7,7 @@ import { getQuestions } from '../questions/utils';
 import { getProducts } from '../products/utils';
 import { addRule, updateRule } from './utils';
 import { Category, Question, Rule, Product } from '@/types';
+import { stripHtml } from '@/utils/stripHtml';
 
 interface Props {
   defaultValues?: Rule;
@@ -19,7 +20,7 @@ export default function RuleForm({ defaultValues, onSuccess, onClose }: Props) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  const [baseQuestionType, setBaseQuestionType] = useState<'number' | 'time'>(
+  const [baseQuestionType, setBaseQuestionType] = useState<'number' | 'time' | 'distance' | 'multitime'>(
   defaultValues?.baseQuestionType || 'number'
 );
 
@@ -72,7 +73,7 @@ const payload: Omit<Rule, 'id'> = {
     onSuccess();
   };
 
-  const numericQuestions = questions.filter((q) => q.type === 'number' || q.type === 'time');
+  const numericQuestions = questions.filter((q) => q.type === 'number' || q.type === 'time' || q.type === 'multitime');
 
   return (
     <div className="space-y-4">
@@ -104,7 +105,7 @@ const payload: Omit<Rule, 'id'> = {
   options={[
     { label: 'Elige una pregunta', value: '' },
     ...numericQuestions.map((q) => ({
-      label: `${q.text}${q.unit ? ` (${q.unit})` : ''}`,
+      label: `${stripHtml(q.text)}${q.unit ? ` (${q.unit})` : ''}`,
       value: q.key,
     })),
   ]}
@@ -112,7 +113,7 @@ const payload: Omit<Rule, 'id'> = {
   onChange={(key) => {
     setBaseQuestionKey(key);
     const selected = questions.find((q) => q.key === key);
-    if (selected?.type === 'time' || selected?.type === 'number') {
+    if (selected?.type === 'time' || selected?.type === 'number' || selected?.type === 'multitime') {
       setBaseQuestionType(selected.type);
     }
   }}
@@ -155,7 +156,7 @@ const payload: Omit<Rule, 'id'> = {
   options={[
     { label: 'Elige una pregunta', value: '' }, // ✅ opción por defecto
     ...availableQuestions.map((q) => ({
-      label: q.text,
+      label: stripHtml(q.text),
       value: q.key,
     })),
   ]}

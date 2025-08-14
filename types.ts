@@ -30,32 +30,23 @@ export interface Question {
   sports?: { sportId: string; order: number }[];
   text: string;
   key: string;
-  type: 'select' | 'number' | 'text'| 'time'; // ← incluiste 'text' en el form
+  type: 'select' | 'number' | 'text'| 'time' | 'distance' | 'multitime'; 
   options?: string[];
   unit?: string;
-  forAllSports?: boolean; // ← nuevo campo para marcar pregunta general
+   timeComponents?: {
+    label: string;
+    key: string;
+  }[];
+  forAllSports?: boolean;
 }
 
-export interface QuestionOrder{
-  questionIds:  string[];
-
-}
-
-
-
-// Futuro: Regla de cálculo (relacionada a categoría y preguntas)
-export interface Condition {
-  questionId: string;
-  operator: '=' | '>' | '<' | '>=' | '<=' | 'includes';
-  value: string | number;
-}
 
 export interface Rule {
   id: string;
   categoryId: string;
   baseQuestionKey: string;
   baseMultiplier: number;
-  baseQuestionType: 'number' | 'time';
+  baseQuestionType: 'number' | 'time' | 'distance' | 'multitime';
   logic: 'AND' | 'OR';
   modifiers: {
     key: string;

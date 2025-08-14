@@ -23,8 +23,11 @@ export const addQuestion = async (data: Omit<Question, 'id'>) => {
   await addDoc(collection(db, COLLECTION_NAME), data);
 };
 
-export const updateQuestion = async (id: string, data: Omit<Question, 'id'>) => {
-  await updateDoc(doc(db, COLLECTION_NAME, id), data);
+export const updateQuestion = async (
+  id: string, 
+  updates: Partial<Omit<Question, "id">>
+) => {
+  await updateDoc(doc(db, "questions", id), updates);
 };
 
 export const deleteQuestion = async (id: string) => {
